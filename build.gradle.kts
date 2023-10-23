@@ -114,6 +114,9 @@ dependencies {
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.slf4j.api)
     implementation(libs.kotlin.logging)
+    implementation("org.lwjgl:lwjgl-stb:3.3.2")
+    implementation("org.lwjgl:lwjgl-openal:3.3.2")
+
 
     when (applicationLogging) {
         Logging.NONE -> {

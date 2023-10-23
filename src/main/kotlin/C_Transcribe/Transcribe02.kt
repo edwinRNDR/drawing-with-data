@@ -4,6 +4,7 @@ import audio.AudioPlayer
 import lib.readSRT
 import org.openrndr.application
 import org.openrndr.color.ColorRGBa
+import org.openrndr.draw.loadFont
 import org.openrndr.shape.Rectangle
 import org.openrndr.writer
 import java.io.File
@@ -22,18 +23,18 @@ fun main() {
             }
             val transcript = readSRT(File("data/transcription/HAHZTDQOj2I.srt"))
             extend {
+                val time = seconds
+                val active =  transcript.filter {
+                    it.startTime <= time && it.endTime > time
+                }
+                drawer.fontMap = loadFont("data/fonts/default.otf", 64.0)
                 writer {
+
                     box = Rectangle(40.0, 40.0, width - 80.0, height - 80.0)
-                    for (item in transcript) {
-
-                        if (item.startTime <= seconds && item.endTime > seconds) {
-                            drawer.fill = ColorRGBa.YELLOW
-                        } else {
-                            drawer.fill = ColorRGBa.GRAY
-                        }
-
+                    newLine()
+                    for (item in active) {
                         for (textMessage in item.texts) {
-                            text(textMessage + " ")
+                            text(textMessage)
                         }
                     }
                 }
