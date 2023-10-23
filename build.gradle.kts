@@ -109,7 +109,7 @@ dependencies {
 
 //    implementation(libs.jsoup)
 //    implementation(libs.gson)
-//    implementation(libs.csv)
+    implementation(libs.csv)
 
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.slf4j.api)
