@@ -31,12 +31,19 @@ fun main() = application {
         var loadJob: Job? = null
         val flipChannel = Channel<Unit>()
         val image = colorBuffer(width, height)
+
+        var sourceFile = ""
+
         keyboard.character.listen {
             if (it.character == 'n') {
                 flipChannel.trySend(Unit)
             }
         }
+
         window.drop.listen {
+
+            sourceFile = File(it.files.first()).name
+
             loadJob?.cancel()
             loadJob = launch {
                 val file = File(it.files.first())
@@ -50,7 +57,7 @@ fun main() = application {
                     for (y in 0 until height) {
                         for (x in 0 until width) {
                             val v = data[y * width + x] / 255.0
-                            s[x, y] = ColorRGBa.RED.toOKHSVa().shiftHue(v * 360.0).toRGBa().toSRGB()
+                            s[x, y] = ColorRGBa.RED.toOKHSVa().shiftHue(v * 30.0).toRGBa().toSRGB()
                         }
                     }
                     s.upload()
@@ -74,6 +81,8 @@ fun main() = application {
         extend(Camera2D())
         extend {
             c.draw(drawer)
+            drawer.defaults()
+            drawer.text(sourceFile, 10.0, height - 10.0)
         }
     }
 }

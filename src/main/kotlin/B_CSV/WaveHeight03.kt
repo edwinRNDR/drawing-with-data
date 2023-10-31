@@ -23,17 +23,9 @@ fun main() {
         }
 
         program {
-
-// fetch data from rws website
-//            val url =
-//                "https://waterinfo.rws.nl/api/chart/get?mapType=golfhoogte&locationCode=Platform-HKZA(HKZA)-1&values=-672%2C0"
-//            val csv = URL(url).readText()
-
             val csv = File("data/csv/Golfhoogte in cm Platform HKZA.csv").readText()
 
             data class Entry(val date: String, val time: String, val location: String, val height: Double)
-
-
             val entries = csvReader {
                 delimiter = ';'
             }.readAllWithHeader(csv).map {
@@ -44,27 +36,14 @@ fun main() {
                     it["Golfhoogte in cm"]?.toDoubleOrNull() ?: -1.0
                 )
             }
-            println(entries)
-            println(entries.size)
             extend(Camera2D())
             extend {
-                val texts = mutableListOf<String>()
-                val textPositions = mutableListOf<Vector2>()
-                val circles = mutableListOf<Circle>()
-
-                var y = 20.0
-                for (entry in entries.reversed().take(6*24*4)) {
-                    texts.add(entry.date)
-                    textPositions.add(Vector2(0.0, y))
-                    texts.add(entry.time)
-                    textPositions.add(Vector2(100.0, y))
-                    circles.add(Circle(200.0, y, 0.25 * (entry.height)))
-                    y += 15.0
+                for (entry in entries.take(400)) {
+                    drawer.text(entry.date, entry.height * 10.0, 0.0)
+                    drawer.text(entry.time, 100.0 + entry.height * 10.0, 0.0)
+                    drawer.text(entry.height.toString(), 200.0 + entry.height * 10.0, 0.0)
+                    drawer.translate(0.0, 15.0)
                 }
-                drawer.texts(texts, textPositions)
-                drawer.fill = ColorRGBa.WHITE.opacify(0.5)
-                drawer.circles(circles)
-
             }
         }
     }

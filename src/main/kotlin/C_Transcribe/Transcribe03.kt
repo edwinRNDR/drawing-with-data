@@ -26,10 +26,10 @@ fun main() {
         program {
 
             extend(AudioPlayer()) {
-                audioFile = "data/audio/HAHZTDQOj2I.ogg"
+                audioFile = "data/audio/FAbsoxQtUwM.ogg"
 
             }
-            val transcript = readSRT(File("data/transcription/HAHZTDQOj2I.srt"))
+            val transcript = readSRT(File("data/transcription/FAbsoxQtUwM.srt"))
 
             val c = compose {
                 layer {

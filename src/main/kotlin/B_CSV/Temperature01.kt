@@ -23,7 +23,7 @@ fun main() {
         }
 
         program {
-            val csv = File("data/csv/Golfhoogte in cm Platform HKZA.csv").readText()
+            val csv = File("data/csv/Watertemperatuur in oC Platform HKZA.csv").readText()
 
             data class Entry(val date: String, val time: String, val location: String, val height: Double)
             val entries = csvReader {
@@ -33,20 +33,18 @@ fun main() {
                     it["Datum"]!!,
                     it["Tijd (CEST)"]!!,
                     it["Locatie"]!!,
-                    it["Golfhoogte in cm"]?.toDoubleOrNull() ?: -1.0
+                    it["Watertemperatuur in oC"]?.replace(",",".")?.toDoubleOrNull() ?: -1.0
                 )
             }
             extend(Camera2D())
             extend {
                 val columns = 30
 
-                drawer.circles {
-                    for ((index, entry) in entries.withIndex()) {
-                        val x = index % columns
-                        val y = index / columns
-                        fill = ColorRGBa.RED.toHSVa().shiftHue(entry.height).toRGBa()
-                        circle(x * 20.0, y * 20.0, entry.height)
-                    }
+                for (entry in entries.take(400)) {
+                    drawer.text(entry.date, entry.height * 10.0, 0.0)
+                    drawer.text(entry.time, 100.0 + entry.height * 10.0, 0.0)
+                    drawer.text(entry.height.toString(), 200.0 + entry.height * 10.0, 0.0)
+                    drawer.translate(0.0, 15.0)
                 }
             }
         }
