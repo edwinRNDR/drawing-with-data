@@ -1,6 +1,7 @@
 package D_CameraBrush
 
 import org.openrndr.application
+import org.openrndr.extensions.Screenshots
 import org.openrndr.extra.noclear.NoClear
 import org.openrndr.ffmpeg.VideoPlayerFFMPEG
 import org.openrndr.ffmpeg.loadVideoDevice
@@ -17,6 +18,7 @@ fun main() {
             }
             val camera = loadVideoDevice(deviceName = "Integrated Webcam", width = 640, height = 480)
             camera.play()
+            extend(Screenshots())
             extend(NoClear())
             extend {
                 camera.draw(drawer, blind = true)

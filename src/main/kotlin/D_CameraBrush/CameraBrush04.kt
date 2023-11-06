@@ -56,7 +56,8 @@ fun main() {
                 val cb = camera.colorBuffer
                 if (cb != null) {
                     drawer.isolatedWithTarget(rt) {
-                        drawer.imageFit(cb, drawer.bounds)
+                        val r = Rectangle(width*1.0, 0.0, -width*1.0, height * 1.0)
+                        drawer.imageFit(cb, r)
                     }
                 }
                 c.draw(drawer)
