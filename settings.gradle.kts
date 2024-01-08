@@ -1,4 +1,4 @@
-rootProject.name = "insert-a-cool-name-here"
+rootProject.name = "drawing-with-data"
 
 pluginManagement {
     repositories {
